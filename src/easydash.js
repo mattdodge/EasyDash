@@ -28,7 +28,7 @@ require.config({
 // Include the dependencies for backbone, and require backbone itself
 define([
 	"backbone", 
-	"goog!visualization,1,packages:[corechart]"
+	"goog!visualization,1,packages:[corechart,gauge]"
 ], function(Backbone,google) {
 	console.log('Backbone & Dependencies loaded');
 	init();
