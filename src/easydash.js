@@ -1,5 +1,6 @@
 listOfModules = [
 	"googlechart",
+	"highchart",
 	"textfeed"
 ];
 
@@ -12,13 +13,18 @@ require.config({
 		propertyParser : '../lib/requirejs-plugins/propertyParser',
 		backbone : '../lib/backbone',
 		underscore : '../lib/underscore',
-		jquery : '../lib/jquery.min'
+		jquery : '../lib/jquery.min',
+		highcharts : '../lib/highcharts'
 	},
 	
 	shim : {
 		'backbone' : {
 			deps : ['underscore', 'jquery'],
 			exports : 'Backbone'
+		},
+		'highcharts' : {
+			deps : ['jquery'],
+			exports : 'Highcharts'
 		}
 	},
 	
@@ -28,8 +34,9 @@ require.config({
 // Include the dependencies for backbone, and require backbone itself
 define([
 	"backbone", 
-	"goog!visualization,1,packages:[corechart,gauge]"
-], function(Backbone,google) {
+	"goog!visualization,1,packages:[corechart,gauge]",
+	"highcharts"
+], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
 });
