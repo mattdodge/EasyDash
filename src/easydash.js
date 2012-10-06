@@ -14,7 +14,8 @@ require.config({
 		backbone : '../lib/backbone',
 		underscore : '../lib/underscore',
 		jquery : '../lib/jquery.min',
-		highcharts : '../lib/highcharts'
+		highcharts : '../lib/highcharts',
+		highcharts_more : '../lib/highcharts-more'
 	},
 	
 	shim : {
@@ -25,6 +26,9 @@ require.config({
 		'highcharts' : {
 			deps : ['jquery'],
 			exports : 'Highcharts'
+		},
+		'highcharts_more' : {
+			deps : ['highcharts']
 		}
 	},
 	
@@ -35,7 +39,8 @@ require.config({
 define([
 	"backbone", 
 	"goog!visualization,1,packages:[corechart,gauge]",
-	"highcharts"
+	"highcharts",
+	"highcharts_more"
 ], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
