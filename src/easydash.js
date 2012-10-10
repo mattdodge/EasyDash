@@ -1,7 +1,8 @@
 listOfModules = [
 	"googlechart",
 	"highchart",
-	"textfeed"
+	"textfeed",
+	"datatable"
 ];
 
 var EasyDash = EasyDash || {};
@@ -15,7 +16,8 @@ require.config({
 		underscore : '../lib/underscore',
 		jquery : '../lib/jquery.min',
 		highcharts : '../lib/highcharts',
-		highcharts_more : '../lib/highcharts-more'
+		highcharts_more : '../lib/highcharts-more',
+		datatables : '../lib/jquery.dataTables'
 	},
 	
 	shim : {
@@ -29,6 +31,9 @@ require.config({
 		},
 		'highcharts_more' : {
 			deps : ['highcharts']
+		},
+		'datatables' : {
+			deps : ['jquery']
 		}
 	},
 	
@@ -40,7 +45,8 @@ define([
 	"backbone", 
 	"goog!visualization,1,packages:[corechart,gauge]",
 	"highcharts",
-	"highcharts_more"
+	"highcharts_more",
+	"datatables"
 ], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
