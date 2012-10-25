@@ -1,5 +1,11 @@
 console.log('Loading HighCharts Module');
 
+Highcharts.setOptions({
+    global: {
+        useUTC: false
+    }
+});
+
 EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 
 	defaults : function() {
@@ -70,11 +76,11 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 					//this is our point
 					var pointYData = [];
 					
-					if (newData[seriesMappings[seriesName]].seriesType == 'datetime') {
-						pointYData.push(eval(dataPoint['x']))
-					} else {
-						pointYData.push(dataPoint['x']);
-					}
+//					if (newData[seriesMappings[seriesName]].seriesType == 'datetime') {
+//						pointYData.push(eval(dataPoint['x']) * 1000)
+//					} else {
+						pointYData.push(eval(dataPoint['x']) * 1000);
+//					}
 						
 					pointYData.push(parseFloat(dataPoint[seriesName]));
 					
