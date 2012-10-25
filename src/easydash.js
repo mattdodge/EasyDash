@@ -108,9 +108,10 @@ function getDashPodModel() {
 		defaults: {
 			"refreshInterval" : 1000,
 			"autoStart" : true,
+			"autoLoad" : true,
 			"dataSource" : null,
-			"dataSourceParams" : {},
 			"dataType" : "json",
+			"dataSourceParams" : {},
 			"dataSourceMethod" : "GET",
 			
 			"podWidth" : 400,
@@ -133,10 +134,16 @@ function getDashPodModel() {
 			
 			this.podPostwork(this.get("pod"));
 			
-			this.getData(this);
-			
-			if (this.get("autoStart")) {
-				this.start();
+			if (this.get("autoLoad")) {
+			// we will load the data at the beginning
+				
+				if (this.get("autoStart")) {
+					// do we want to start the interval?
+					this.start();
+				} else {
+					// or just get the data once?
+					this.getData(this);
+				}
 			}
 		},
 		
@@ -190,6 +197,13 @@ function getDashPodModel() {
 			var me = this,
 				func = me.getData;
 				
+			if (me.get("timeoutInterval")) {
+				console.log("Chart already started, ignoring");
+				return;
+			}
+				
+			func(me);
+			
 			me.set("timeoutInterval", setInterval(
 				function() { func(me); },
 				me.get("refreshInterval")
@@ -200,6 +214,8 @@ function getDashPodModel() {
 			var me = this;
 			
 			clearInterval(me.get("timeoutInterval"));
+			
+			me.set("timeoutInterval",null);
 		}
 		
 	});
