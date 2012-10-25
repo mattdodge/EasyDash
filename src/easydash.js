@@ -2,7 +2,8 @@ listOfModules = [
 	"googlechart",
 	"highchart",
 	"textfeed",
-	"datatable"
+	"datatable",
+	"counter"
 ];
 
 var EasyDash = EasyDash || {};
@@ -17,7 +18,9 @@ require.config({
 		jquery : '../lib/jquery.min',
 		highcharts : '../lib/highcharts',
 		highcharts_more : '../lib/highcharts-more',
-		datatables : '../lib/jquery.dataTables'
+		highstock : '../lib/highstock',
+		datatables : '../lib/jquery.dataTables',
+		appleCounter : '../lib/apple-counter'
 	},
 	
 	shim : {
@@ -46,7 +49,8 @@ define([
 	"goog!visualization,1,packages:[corechart,gauge]",
 	"highcharts",
 	"highcharts_more",
-	"datatables"
+	"datatables",
+	"appleCounter"
 ], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
