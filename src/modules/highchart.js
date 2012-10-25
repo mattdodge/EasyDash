@@ -48,7 +48,8 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 		
 		_.each(data["series"], function(series) {
 			var seriesData = {
-				name : series["name"],
+				name : series["label"],
+				seriesType : series["type"],
 				data : []
 			};
 			
@@ -67,17 +68,21 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 			for(seriesName in seriesMappings) {
 				if (seriesName in dataPoint) {
 					//this is our point
-					var pointYData = [
-						dataPoint['x'],
-						parseFloat(dataPoint[seriesName])
-					];
+					var pointYData = [];
+					
+					if (newData[seriesMappings[seriesName]].seriesType == 'datetime') {
+						pointYData.push(eval(dataPoint['x']))
+					} else {
+						pointYData.push(dataPoint['x']);
+					}
+						
+					pointYData.push(parseFloat(dataPoint[seriesName]));
 					
 					newData[seriesMappings[seriesName]].data.push(pointYData);
 				} 
 				
 			}
 		});
-		
 		return newData;
 	},
 	
@@ -99,3 +104,88 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 		});
 	}
 });
+
+EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.extend({
+
+	defaults : function() {
+		return $.extend({},
+		{
+			"chartOptions" : {},
+			"startDate" : null,
+			"endDate" : null
+		},
+		this.constructor.__super__.defaults);
+	},
+	
+	basicChartOptions : {
+		"chart" : {
+			"backgroundColor" : "rgba(255,255,255,0)",
+			"xAxis" : {
+				"type" : "datetime"
+			}
+		},
+		"credits" : {
+			"enabled" : false
+		}
+	},
+	
+	podPrework : function() {
+		this.set("myOptions", $.extend(true, {}, this.basicChartOptions, this.get("chartOptions")));
+	},
+	
+	podPostwork : function(pod) {
+		var me = this;
+		
+		var highstockConfig = $.extend(true, {
+			chart: {
+				renderTo: pod.id
+			},
+			title: {
+				text: me.get("podTitle")
+			}
+		},
+		me.get("myOptions"));
+		
+		if (me.get("startDate")) {
+			if (me.get("endDate")) {
+				endDate = me.get("endDate");
+			} else {
+				endDate = (new Date).getTime();
+			}
+			
+			dummySeries = {
+				name: "dummy",
+				color: "rgba(255,255,255,0)",
+				showInLegend: false,
+				data: [
+					[me.get("startDate"),0],
+					[endDate,0]
+				]
+			};
+			highstockConfig['series'] = [dummySeries];
+		}
+		
+		me.chart = new Highcharts.StockChart(highstockConfig);
+	},
+	
+	updateDashPod : function(data) {
+		var me = this;
+		
+		_.each(data, function(seriesConfig) {
+			// see if series exists already
+			var existingSeries = _.find(me.chart.series, function(series) {
+				return series.name == seriesConfig["name"];		
+			});
+			
+			if (existingSeries) {
+				existingSeries.setData($.parseJSON(JSON.stringify(seriesConfig["data"])));
+			} else {
+				// otherwise add the series
+				me.chart.addSeries($.parseJSON(JSON.stringify(seriesConfig)));
+			}
+		});
+		
+		me.chart.series
+	}
+});
+

@@ -35,6 +35,9 @@ require.config({
 		'highcharts_more' : {
 			deps : ['highcharts']
 		},
+		'highstock' : {
+			deps : ['highcharts']
+		},
 		'datatables' : {
 			deps : ['jquery']
 		}
@@ -49,6 +52,7 @@ define([
 	"goog!visualization,1,packages:[corechart,gauge]",
 	"highcharts",
 	"highcharts_more",
+	"highstock",
 	"datatables",
 	"appleCounter"
 ], function(Backbone,google,Highcharts) {
