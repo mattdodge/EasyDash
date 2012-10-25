@@ -25,11 +25,12 @@ require.config({
 	
 	shim : {
 		'backbone' : {
-			deps : ['underscore', 'jquery'],
+//			deps : ['underscore', 'jquery'],
+			deps : ['underscore'],
 			exports : 'Backbone'
 		},
 		'highcharts' : {
-			deps : ['jquery'],
+//			deps : ['jquery'],
 			exports : 'Highcharts'
 		},
 		'highcharts_more' : {
@@ -39,7 +40,7 @@ require.config({
 			deps : ['highcharts']
 		},
 		'datatables' : {
-			deps : ['jquery']
+//			deps : ['jquery']
 		}
 	},
 	
@@ -167,7 +168,6 @@ function getDashPodModel() {
 		
 		getData : function(me) {
 			if (me.get("dataSource")) {
-				
 				$.ajax({
 					success: function(data, status, jqXHR) {
 						me.updateDashPod(me.translateData(data));
