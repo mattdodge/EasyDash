@@ -18,15 +18,20 @@ EasyDash.availablePods.DataTablePod = EasyDash.DashPod.extend({
 		
 		// save the series data as column data for DataTables
 		var seriesList = [];
-		var pctPerColumn = Math.floor(100 / data["series"].length) + "%";
 
 		_.each(data["series"], function(series) {
-			seriesList.push({
+			
+			var seriesProps = {
 				"mData" : series["name"],
 				"sName" : series["name"],
-				"sTitle" : series["label"],
-				"sWidth" : pctPerColumn
-			});
+				"sTitle" : series["label"]
+			}
+			
+			if($.inArray("columnOptions",series)) {
+				$.extend(seriesProps, series["columnOptions"]);
+			}
+			
+			seriesList.push(seriesProps);
 		});
 		me.set("seriesList", seriesList);
 		
@@ -37,7 +42,7 @@ EasyDash.availablePods.DataTablePod = EasyDash.DashPod.extend({
 		var me = this,
 			tableObj = me.get("tableObj");
 			
-		tableObj.dataTable($.extend(true, {
+		var dataTableObj = tableObj.dataTable($.extend(true, {
 			"aaData" : data,
 			"aoColumns" : me.get("seriesList"),
 			"bPaginate" : false,
@@ -47,6 +52,7 @@ EasyDash.availablePods.DataTablePod = EasyDash.DashPod.extend({
 		me.get("tableOptions")));
 		
 		$("div.dataTableHeader").html(me.get("podTitle"));
+		me.set("dataTableObj",dataTableObj);
 	}
 	
 });
