@@ -3,7 +3,8 @@ listOfModules = [
 	"highchart",
 	"textfeed",
 	"datatable",
-	"counter"
+	"counter",
+	"card_count"
 ];
 
 var EasyDash = EasyDash || {};
