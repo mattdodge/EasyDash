@@ -115,8 +115,8 @@ function getDashPodModel() {
 			"dataSourceParams" : {},
 			"dataSourceMethod" : "GET",
 			
-			"podWidth" : 400,
-			"podHeight" : 300,
+			"podWidth" : null,
+			"podHeight" : null,
 			"podId" : null,
 			"podClass" : "easydashpod",
 			"podTitle" : ""
@@ -157,11 +157,17 @@ function getDashPodModel() {
 		},
 		
 		createDashPod : function() {
+			var theDiv = $("<div/>");
 			
+			if (this.get("podWidth")) {
+				theDiv.width(this.get("podWidth"));
+			}
 			
-			return $("<div/>")
-				.width(this.get("podWidth"))
-				.height(this.get("podHeight"))
+			if (this.get("podHeight")) {
+				theDiv.height(this.get("podHeight"));
+			}
+			
+			return theDiv
 				.addClass(this.get("podClass"))
 				.attr("id",this.get("podId"))[0];
 		},
