@@ -45,10 +45,17 @@ EasyDash.availablePods.CardCount = EasyDash.DashPod.extend({
 			if (me.get("countTo")) {
 			// should we have started counting?
 				
-				if (me.get("currentCount") + me.get("countIncrement") >= me.get("countTo")) {
+				if (me.get("countTo") < me.get("currentCount")) {
+					// the count went down, set it and reset it
+					$(me.get("totalCount")).html(me.get("topFormat")(me.get("countTo")));
+					me.set("currentCount", me.get("countTo"));
+					me.set("countIncrement",0);
+				} else if (me.get("currentCount") + me.get("countIncrement") >= me.get("countTo")) {
+					// we have reached the count, set it
 					$(me.get("totalCount")).html(me.get("topFormat")(me.get("countTo")));
 					me.set("currentCount", me.get("countTo"));
 				} else {
+					// keep on incrementing
 					$(me.get("totalCount")).html(me.get("topFormat")(me.get("currentCount") + me.get("countIncrement")));
 					me.set("currentCount", me.get("currentCount") + me.get("countIncrement"));
 				}
