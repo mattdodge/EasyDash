@@ -15,13 +15,10 @@ EasyDash.availablePods.CounterPod = EasyDash.DashPod.extend({
 		
 		var podDiv = $('<div/>')
 			.addClass('flip-counter')
-			.css('float','right')
 			.attr('id',me.get("podId")+'-counter');
 			
 		var podLabel = $('<div/>')
 			.addClass('counter-label')
-			.css('float','right')
-			.css('line-height','78px')
 			.html(me.get("podTitle"));
 			
 		$(pod).append(podDiv).append(podLabel);
@@ -68,7 +65,7 @@ EasyDash.availablePods.CounterPod = EasyDash.DashPod.extend({
 			countObj = me.get("countObj");
 		
 		countObj.incrementTo(
-			curCount + data["count"],
+			data["count"],
 //			12345,
 			me.get("refreshInterval")/1000,
 			me.get("animationDuration")
