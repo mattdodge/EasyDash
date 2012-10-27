@@ -65,7 +65,7 @@ EasyDash.availablePods.CounterPod = EasyDash.DashPod.extend({
 			countObj = me.get("countObj");
 		
 		countObj.incrementTo(
-			data["count"],
+			parseInt(data["count"]),
 //			12345,
 			me.get("refreshInterval")/1000,
 			me.get("animationDuration")
