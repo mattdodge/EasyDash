@@ -76,7 +76,7 @@ EasyDash.availablePods.CardCount = EasyDash.DashPod.extend({
 		diffCount.removeClass("social-count-delta-negative");
 		diffCount.addClass(data["bottomClass"]);
 		
-		me.drawCount(parseInt(data["top"]));
+		me.drawCount(parseFloat(data["top"]));
 	},
 	
 	drawCount : function(newCount) {
