@@ -108,6 +108,8 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 				me.chart.addSeries(seriesConfig);
 			}
 		});
+		
+		me.chart.hideLoading();
 	}
 });
 
@@ -191,7 +193,7 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 			}
 		});
 		
-		me.chart.series
+		me.chart.hideLoading();
 	}
 });
 
