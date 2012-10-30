@@ -40,7 +40,13 @@ EasyDash.availablePods.DataTablePod = EasyDash.DashPod.extend({
 	
 	updateDashPod : function(data) {
 		var me = this,
-			tableObj = me.get("tableObj");
+			tableObj = me.get("tableObj"),
+			oldDataTableObj = me.get("dataTableObj");
+		
+		if (oldDataTableObj) {
+			oldDataTableObj.fnClearTable(false);
+			oldDataTableObj.fnDestroy();
+		}
 			
 		var dataTableObj = tableObj.dataTable($.extend(true, {
 			"aaData" : data,
