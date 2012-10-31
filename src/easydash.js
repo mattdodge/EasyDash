@@ -51,7 +51,7 @@ require.config({
 // Include the dependencies for backbone, and require backbone itself
 define([
 	"backbone", 
-	"goog!visualization,1,packages:[corechart,gauge]",
+//	"goog!visualization,1,packages:[corechart,gauge]",
 	"highcharts",
 	"highcharts_more",
 	"highstock",
