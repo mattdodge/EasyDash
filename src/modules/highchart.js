@@ -163,6 +163,7 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 			
 			dummySeries = {
 				name: "dummy",
+				id : "dummy",
 				color: "rgba(255,255,255,0)",
 				showInLegend: false,
 				data: [
@@ -190,6 +191,10 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 			} else {
 				// otherwise add the series
 				me.chart.addSeries($.parseJSON(JSON.stringify(seriesConfig)));
+				
+				// then remove the dummy series
+				var dummy = me.chart.get('dummy');
+				if (dummy) { dummy.remove(true); }
 			}
 		});
 		
