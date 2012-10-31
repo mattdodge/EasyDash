@@ -25,6 +25,18 @@ EasyDash.availablePods.GoogleChartsPod = EasyDash.DashPod.extend({
 			this.getFormat = this.get("getFormat");
 		}
 		
+		if (this.get("podWidth")) {
+			$.extend(this.basicChartOptions,
+				{ "width" : this.get("podWidth") }
+			);
+		}
+		
+		if (this.get("podHeight")) {
+			$.extend(this.basicChartOptions,
+				{ "height" : this.get("podHeight") }
+			);
+		}
+		
 		this.set("myOptions", this.basicChartOptions);
 		
 		this.set("myOptions", $.extend(true, {}, this.get("myOptions"), this.get("chartOptions")));
