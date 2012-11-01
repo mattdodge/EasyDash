@@ -64,12 +64,16 @@ EasyDash.availablePods.CounterPod = EasyDash.DashPod.extend({
 			curCount = me.get("currentCount"),
 			countObj = me.get("countObj");
 		
-		countObj.incrementTo(
-			parseInt(data["count"]),
-//			12345,
-			me.get("refreshInterval")/1000,
-			me.get("animationDuration")
-		);
+		if (curCount == 0) {
+			countObj.setValue(data["count"]);
+		} else {
+			countObj.incrementTo(
+				parseInt(data["count"]),
+	//			12345,
+				me.get("refreshInterval")/1000,
+				me.get("animationDuration")
+			);
+		}
 		
 		me.set("currentCount", curCount + data["count"]);
 	}
