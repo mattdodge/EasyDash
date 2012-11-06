@@ -53,6 +53,8 @@ EasyDash.availablePods.GoogleChartsPod = EasyDash.DashPod.extend({
 			me.chart = new google.visualization.BarChart(pod);
 		} else if (me.get("chartType") == "gauge") {
 			me.chart = new google.visualization.Gauge(pod);
+		} else if (me.get("chartType") == "geo") {
+			me.chart = new google.visualization.GeoChart(pod);
 		} else {
 			console.error(me.get("chartType") + " is not a valid chart type");
 		}
