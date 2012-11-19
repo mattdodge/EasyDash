@@ -4,7 +4,8 @@ listOfModules = [
 	"textfeed",
 	"datatable",
 	"counter",
-	"card_count"
+	"card_count",
+	"wordcloud"
 ];
 
 var EasyDash = EasyDash || {};
@@ -21,7 +22,8 @@ require.config({
 		highcharts_more : '../lib/highcharts-more',
 		highstock : '../lib/highstock',
 		datatables : '../lib/jquery.dataTables',
-		appleCounter : '../lib/apple-counter'
+		appleCounter : '../lib/apple-counter',
+		wordcloud : '../lib/jquery.wordcloud'
 	},
 	
 	shim : {
@@ -56,7 +58,8 @@ define([
 	"highcharts_more",
 	"highstock",
 	"datatables",
-	"appleCounter"
+	"appleCounter",
+	"wordcloud"
 ], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
