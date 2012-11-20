@@ -107,7 +107,8 @@ EasyDash.availablePods.GoogleChartsPod = EasyDash.DashPod.extend({
 		var point = { "c" : new Array() };
 		
 		point["c"][0] = {
-			"v" : dataPoint["x"]		
+			"v" : dataPoint["x"],
+			"f" : this.getFormat(dataPoint, "xaxis")
 		};
 		
 //		for(var i=0; i < totalSeries; i++) {
@@ -151,6 +152,8 @@ EasyDash.availablePods.GoogleChartsPod = EasyDash.DashPod.extend({
 	
 	getFormat : function(value, formatType) {
 		switch(formatType) {
+			case "xaxis":
+				return value["x"] + "";
 			case "number":
 			case "string":
 				return value + "";
