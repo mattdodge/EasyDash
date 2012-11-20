@@ -37,16 +37,8 @@ EasyDash.availablePods.WordCloudPod = EasyDash.DashPod.extend({
 			canvas = me.get("canvas"),
 			ctx = canvas[0].getContext('2d');
 		
-		// Store the current transformation matrix
-		ctx.save();
-		
-		// Use the identity matrix while clearing the canvas
-		ctx.setTransform(1, 0, 0, 1, 0, 0);
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		
-		// Restore the transform
-		ctx.restore();
-		
+		ctx.clearRect(0, 0, me.get("canvasWidth"), me.get("canvasHeight"));
+
 		ctx.fillStyle = '#333';
 		ctx.font = "italic bold 12px 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif";
 		ctx.textBaseline = 'bottom';
