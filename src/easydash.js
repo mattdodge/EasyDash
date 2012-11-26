@@ -176,11 +176,14 @@ function getDashPodModel() {
 				.attr("id",this.get("podId"))[0];
 		},
 		
-		getData : function(me) {
+		getData : function(me, callback) {
+			if (!callback) callback = function() {}
+			
 			if (me.get("dataSource")) {
 				$.ajax({
 					success: function(data, status, jqXHR) {
 						me.updateDashPod(me.translateData(data));
+						callback();
 					},
 					error: function(jqXHR, status, error) {
 						console.error("Error fetching data : "+status);
