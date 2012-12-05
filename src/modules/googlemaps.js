@@ -17,10 +17,6 @@ EasyDash.availablePods.GoogleMapsPod = EasyDash.DashPod.extend({
 	},
 	
 	updateDashPod : function(data) {
-		var me = this;
-	},
-	
-	translateData : function(data) {
 		var me = this,
 			map = me.get("map"),
 			markers = me.get("markers"),
@@ -79,6 +75,9 @@ EasyDash.availablePods.GoogleMapsPod = EasyDash.DashPod.extend({
 		});
 		
 		me.set("markers",markers);
+			
+		// resize for hidden divs
+		google.maps.event.trigger(map, 'resize');
 	},
 	
 	extendBounds : function(latLong) {
