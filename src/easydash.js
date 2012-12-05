@@ -6,7 +6,8 @@ listOfModules = [
 	"counter",
 	"card_count",
 	"wordcloud",
-	"flipswitch"
+	"flipswitch",
+	"googlemaps"
 ];
 
 var EasyDash = EasyDash || {};
@@ -25,7 +26,9 @@ require.config({
 		datatables : '../lib/jquery.dataTables',
 		appleCounter : '../lib/apple-counter',
 		wordcloud : '../lib/jquery.wordcloud',
-		toggleSwitch : '../lib/fn.toggleSwitch.min'
+		toggleSwitch : '../lib/fn.toggleSwitch.min',
+		gmaps : 'https://maps.googleapis.com/maps/api/js?sensor=true&callback=emptyCallback'
+		// TODO: Race condition with google maps loading, consider using $.Deferred
 	},
 	
 	shim : {
@@ -62,7 +65,8 @@ define([
 	"datatables",
 	"appleCounter",
 	"wordcloud",
-	"toggleSwitch"
+	"toggleSwitch",
+	"gmaps"
 ], function(Backbone,google,Highcharts) {
 	console.log('Backbone & Dependencies loaded');
 	init();
@@ -109,6 +113,8 @@ function finalizeDashboard(dashboardId) {
 		$('<div/>').css('clear','both')
 	);
 }
+
+function emptyCallback() {}
 
 function getDashPodModel() {
 	return Backbone.Model.extend({
