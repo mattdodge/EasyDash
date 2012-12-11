@@ -76,19 +76,24 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 					//this is our point
 					var pointYData = [];
 					
-//					if (newData[seriesMappings[seriesName]].seriesType == 'datetime') {
-//						pointYData.push(eval(dataPoint['x']) * 1000)
-//					} else {
-						pointYData.push(eval(dataPoint['x']) * 1000);
-//					}
-						
-					pointYData.push(parseFloat(dataPoint[seriesName]));
+					pointYData.push(eval(dataPoint['x']) * 1000);
+					
+					if (typeof dataPoint[seriesName] != 'object') {
+						dataArr = [dataPoint[seriesName]];
+					} else {
+						dataArr = dataPoint[seriesName];
+					}
+					
+					_.each(dataArr, function(pt) {
+						pointYData.push(parseFloat(pt));
+					});
 					
 					newData[seriesMappings[seriesName]].data.push(pointYData);
 				} 
 				
 			}
 		});
+		
 		return newData;
 	},
 	
@@ -173,7 +178,7 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 			};
 			highstockConfig['series'] = [dummySeries];
 		}
-		
+
 		me.chart = new Highcharts.StockChart(highstockConfig);
 	},
 	
