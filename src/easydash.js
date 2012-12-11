@@ -42,7 +42,7 @@ require.config({
 			exports : 'Highcharts'
 		},
 		'highcharts_more' : {
-			deps : ['highcharts']
+			deps : ['highcharts','highstock']
 		},
 		'highstock' : {
 			deps : ['highcharts']
