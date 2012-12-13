@@ -7,7 +7,8 @@ listOfModules = [
 	"card_count",
 	"wordcloud",
 	"flipswitch",
-	"googlemaps"
+	"googlemaps",
+	"laptop_canvas"
 ];
 
 var EasyDash = EasyDash || {};
