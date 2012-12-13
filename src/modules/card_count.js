@@ -42,7 +42,7 @@ EasyDash.availablePods.CardCount = EasyDash.DashPod.extend({
 		me.set("currentCount",null);
 		
 		me.set("animationInterval", setInterval(function() {
-			if (me.get("countTo")) {
+			if (me.get("countTo") != null) {
 			// should we have started counting?
 				
 				if (me.get("countTo") < me.get("currentCount")) {
