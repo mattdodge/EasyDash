@@ -76,7 +76,9 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 					//this is our point
 					var pointYData = [];
 					
-					pointYData.push(eval(dataPoint['x']) * 1000);
+					if ('x' in dataPoint) {
+						pointYData.push(eval(dataPoint['x']) * 1000);
+					}
 					
 					if (typeof dataPoint[seriesName] != 'object') {
 						dataArr = [dataPoint[seriesName]];
@@ -94,11 +96,30 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 			}
 		});
 		
-		return newData;
+		var xAxis = null;
+		if ("xAxis" in data && "xAxisOptions" in data["xAxis"] && "categories" in data["xAxis"]["xAxisOptions"]) {
+			// set our xAxis categories
+			xAxis = data["xAxis"]["xAxisOptions"]["categories"];
+			
+			// now we need to remove the 1 element arrays and make them all into one
+			for(seriesName in seriesMappings) {
+				var newArr = [];
+				_.each(newData[seriesMappings[seriesName]].data, function(dataPointArr) {
+					newArr.push(dataPointArr[0]);
+				});
+				newData[seriesMappings[seriesName]].data = newArr;
+			}
+		}
+		
+		return {
+			"data" : newData,
+			"xAxis" : xAxis
+		};
 	},
 	
-	updateDashPod : function(data) {
-		var me = this;
+	updateDashPod : function(newData) {
+		var me = this,
+			data = newData["data"];
 		
 		_.each(data, function(seriesConfig) {
 			// see if series exists already
@@ -113,6 +134,10 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 				me.chart.addSeries(seriesConfig);
 			}
 		});
+		
+		if ("xAxis" in newData && newData["xAxis"]) {
+			me.chart.xAxis[0].setCategories(newData["xAxis"]);
+		}
 		
 		me.chart.hideLoading();
 	}
@@ -182,8 +207,9 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 		me.chart = new Highcharts.StockChart(highstockConfig);
 	},
 	
-	updateDashPod : function(data) {
-		var me = this;
+	updateDashPod : function(newData) {
+		var me = this,
+			data = newData["data"];
 		
 		_.each(data, function(seriesConfig) {
 			// see if series exists already
