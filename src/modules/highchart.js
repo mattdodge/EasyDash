@@ -54,6 +54,7 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 		
 		_.each(data["series"], function(series) {
 			var seriesData = {
+				id : series["name"],
 				name : series["label"],
 				seriesType : series["type"],
 				data : []
@@ -76,19 +77,36 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 					//this is our point
 					var pointYData = [];
 					
-					if ('x' in dataPoint) {
-						pointYData.push(eval(dataPoint['x']) * 1000);
-					}
-					
-					if (typeof dataPoint[seriesName] != 'object') {
-						dataArr = [dataPoint[seriesName]];
+					if(newData[seriesMappings[seriesName]]["seriesType"] == "flags") {
+						pointYData = {};
+						if ('x' in dataPoint) {
+							pointYData['x'] = eval(dataPoint['x']) * 1000;
+						}
+						
+						if (typeof dataPoint[seriesName] == 'object') {
+							pointYData['title'] = dataPoint[seriesName].title;
+							pointYData['text'] = dataPoint[seriesName].text;
+						} else {
+							pointYData['title'] = dataPoint[seriesName];
+							pointYData['text'] = dataPoint[seriesName];
+						}
+						
 					} else {
-						dataArr = dataPoint[seriesName];
-					}
 					
-					_.each(dataArr, function(pt) {
-						pointYData.push(parseFloat(pt));
-					});
+						if ('x' in dataPoint) {
+							pointYData.push(eval(dataPoint['x']) * 1000);
+						}
+						
+						if (typeof dataPoint[seriesName] != 'object') {
+							dataArr = [dataPoint[seriesName]];
+						} else {
+							dataArr = dataPoint[seriesName];
+						}
+						
+						_.each(dataArr, function(pt) {
+							pointYData.push(parseFloat(pt));
+						});
+					}
 					
 					newData[seriesMappings[seriesName]].data.push(pointYData);
 				} 
