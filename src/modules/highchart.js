@@ -94,7 +94,11 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 					} else {
 					
 						if ('x' in dataPoint) {
-							pointYData.push(eval(dataPoint['x']) * 1000);
+							if ((dataPoint["x"]+"").length <= 10) {
+								pointYData.push(eval(dataPoint['x']) * 1000);
+							} else {
+								pointYData.push(eval(dataPoint['x']));
+							}
 						}
 						
 						if (typeof dataPoint[seriesName] != 'object') {
@@ -137,7 +141,8 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 	
 	updateDashPod : function(newData) {
 		var me = this,
-			data = newData["data"];
+			data = newData["data"],
+			seriesAccountedFor = [];
 		
 		_.each(data, function(seriesConfig) {
 			// see if series exists already
@@ -145,11 +150,25 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 				return series.name == seriesConfig["name"];		
 			});
 			
+			seriesAccountedFor.push(seriesConfig["name"])
+			
 			if (existingSeries) {
-				existingSeries.setData(seriesConfig["data"]);
+				// check that the colors are the same
+				if (existingSeries.options.color != seriesConfig["color"]) {
+					existingSeries.remove(false);
+					me.chart.addSeries($.parseJSON(JSON.stringify(seriesConfig)));
+				} else {
+					existingSeries.setData($.parseJSON(JSON.stringify(seriesConfig["data"])));
+				}
 			} else {
 				// otherwise add the series
-				me.chart.addSeries(seriesConfig);
+				me.chart.addSeries($.parseJSON(JSON.stringify(seriesConfig)));
+			}
+		});
+		
+		_.each(me.chart.series, function(s) {
+			if ($.inArray(s.name, seriesAccountedFor) == -1) {
+				s.remove(true);
 			}
 		});
 		
