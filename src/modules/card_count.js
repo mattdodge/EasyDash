@@ -76,6 +76,10 @@ EasyDash.availablePods.CardCount = EasyDash.DashPod.extend({
 		diffCount.removeClass("social-count-delta-negative");
 		diffCount.addClass(data["bottomClass"]);
 		
+		if ('backgroundImage' in data) {
+			$(diffCount).parent().parent().css('background-image','url("'+ data['backgroundImage']+'")');
+		}
+		
 		me.drawCount(parseFloat(data["top"]));
 	},
 	
