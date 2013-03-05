@@ -108,7 +108,11 @@ EasyDash.availablePods.HighChartsPod = EasyDash.DashPod.extend({
 						}
 						
 						_.each(dataArr, function(pt) {
-							pointYData.push(parseFloat(pt));
+							if (isNaN(pt)) {
+								pointYData.push(pt);
+							} else {
+								pointYData.push(parseFloat(pt));
+							}
 						});
 					}
 					
@@ -233,11 +237,13 @@ EasyDash.availablePods.HighStockPod = EasyDash.availablePods.HighChartsPod.exten
 				id : "dummy",
 				color: "rgba(255,255,255,0)",
 				showInLegend: false,
+				yAxis : 0,
 				data: [
 					[me.get("startDate"),0],
 					[endDate,0]
 				]
 			};
+			
 			highstockConfig['series'] = [dummySeries];
 		}
 
